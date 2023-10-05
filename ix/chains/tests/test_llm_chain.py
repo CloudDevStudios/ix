@@ -44,7 +44,7 @@ def load_llm_mock(mocker):
 
 
 class TestLLMChain:
-    @pytest.mark.parametrize("role", [role for role in TEMPLATE_CLASSES.keys()])
+    @pytest.mark.parametrize("role", list(TEMPLATE_CLASSES.keys()))
     def test_create_message(self, role):
         message = {
             "role": role,

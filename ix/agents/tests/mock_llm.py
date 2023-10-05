@@ -10,7 +10,7 @@ class MockChatOpenAI(ChatOpenAI):
     return_value: Any = None
     raise_exception: Any = None
 
-    def validate_environment(cls, values: Dict) -> Dict:
+    def validate_environment(self, values: Dict) -> Dict:
         return {}
 
     def set_return_value(self, return_value: Any):

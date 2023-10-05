@@ -108,9 +108,10 @@ class ChooseTool(Chain):
     @property
     def tool_prompt(self):
         """build prompt for configured tools"""
-        lines = []
-        for i, tool in enumerate(self.tool_configs.values()):
-            lines.append(f'{i}. {tool["name"]}: {tool["description"]}')
+        lines = [
+            f'{i}. {tool["name"]}: {tool["description"]}'
+            for i, tool in enumerate(self.tool_configs.values())
+        ]
         return "\n".join(lines)
 
     def _call(self, inputs: Dict[str, str]) -> Dict[str, str]:

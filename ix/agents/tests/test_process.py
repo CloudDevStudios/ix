@@ -44,9 +44,7 @@ class MockTicker:
 
         # simulate return code, will be False when autonomous mode
         # is disabled and agent returns with AUTH_REQUEST
-        if self.return_value is not None:
-            return self.return_value
-        return self.remaining >= 0
+        return self.remaining >= 0 if self.return_value is None else self.return_value
 
 
 class MessageTeardown:
@@ -126,13 +124,7 @@ def msg_to_response(msg: TaskLogMessage):
     """utility for turning model instances back into response json"""
     content = dict(msg.content.items())
     content.pop("type")
-    json_content = f"###START###{json.dumps(content, sort_keys=True)}###END###"
-    return json_content
-
-    return {
-        "choices": [{"message": {"content": json_content}}],
-        "usage": {"prompt_tokens": 5, "completion_tokens": 7, "total_tokens": 12},
-    }
+    return f"###START###{json.dumps(content, sort_keys=True)}###END###"
 
 
 @pytest.mark.django_db

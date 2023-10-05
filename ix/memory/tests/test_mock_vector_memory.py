@@ -6,8 +6,7 @@ from ix.memory.tests.mock_vector_memory import MockMemory
 
 @pytest.fixture
 def mock_memory():
-    memory = MockMemory(index_name="test_index")
-    return memory
+    return MockMemory(index_name="test_index")
 
 
 def test_add_vector(mock_memory, mock_embeddings):

@@ -32,8 +32,6 @@ def google_search_api(query: str) -> List[str]:
             return [item["link"] for item in res["items"]]
     except HttpError as e:
         logger.error(f"Error searching Google API: {e}")
-        pass
-
     return []
 
 

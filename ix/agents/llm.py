@@ -35,7 +35,6 @@ def load_llm(
 def load_chain(config: Dict[str, Any], callback_manager: IxCallbackManager):
     chain_class = import_class(config["class_path"])
     logger.debug(f"loading chain config={config}")
-    instance = chain_class.from_config(
+    return chain_class.from_config(
         config.get("config", {}), callback_manager=callback_manager
     )
-    return instance

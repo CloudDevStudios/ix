@@ -11,11 +11,10 @@ def get_function_signature(func):
     Returns the signature of a function as a string, without the return type hint.
     """
     signature = inspect.signature(func)
-    parameters = []
-    for param in signature.parameters.values():
-        parameters.append(
-            f"{param.name}: {param.annotation.__name__ if hasattr(param.annotation, '__name__') else str(param.annotation)}"
-        )
+    parameters = [
+        f"{param.name}: {param.annotation.__name__ if hasattr(param.annotation, '__name__') else str(param.annotation)}"
+        for param in signature.parameters.values()
+    ]
     return ", ".join(parameters)
 
 
@@ -98,10 +97,9 @@ class CommandRegistry:
         """
         commands = list(self.commands.values())
         commands.sort(key=lambda cmd: cmd.name)
-        clauses = "\n".join(
+        return "\n".join(
             [f"{idx + 1}. {str(cmd)}" for idx, cmd in enumerate(commands)]
         )
-        return clauses
 
     def import_commands(self, module_name: str) -> None:
         """

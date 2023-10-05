@@ -97,11 +97,10 @@ class ChainNode(models.Model):
         config = self.config.copy() if self.config else {}
 
         if self.node_type == "list":
-            child_chains = []
-            for i, child in enumerate(
-                self.children.all().order_by("incoming_edges__key")
-            ):
-                child_chains.append(child.load_config())
+            child_chains = [
+                child.load_config()
+                for child in self.children.all().order_by("incoming_edges__key")
+            ]
             config["chains"] = child_chains
         elif self.node_type == "map":
             for edge in self.outgoing_edges.select_related("target"):

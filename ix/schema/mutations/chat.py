@@ -175,8 +175,8 @@ class TaskLogMessageResponse(graphene.ObjectType):
     task_log_message = graphene.Field(TaskLogMessage)
     errors = graphene.List(graphene.String)
 
-    def resolve_task_log(root, info):
-        return root.task_log
+    def resolve_task_log(self, info):
+        return self.task_log
 
 
 class ChatInput(graphene.InputObjectType):

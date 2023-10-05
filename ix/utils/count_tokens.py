@@ -60,11 +60,7 @@ def count_tokens(text, model="gpt-3.5-turbo-0301"):
             "Warning: gpt-4 may change over time. Returning num tokens assuming gpt-4-0314."
         )
         return count_tokens(text, model="gpt-4-0314")
-    elif model == "gpt-3.5-turbo-0301":
-        pass
-    elif model == "gpt-4-0314":
-        pass
-    else:
+    elif model not in ["gpt-3.5-turbo-0301", "gpt-4-0314"]:
         raise NotImplementedError(
             f"""num_tokens_from_messages() is not implemented for model {model}. See
             https://github.com/openai/openai-python/blob/main/chatml.md for information

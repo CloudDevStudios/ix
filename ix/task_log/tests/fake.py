@@ -17,21 +17,19 @@ def fake_chain():
     """
     root_node = fake_chain_node()
 
-    chain = Chain.objects.create(
+    return Chain.objects.create(
         id=uuid.uuid4(),
         name=fake.unique.name(),
         description=fake.text(),
         root=root_node,
     )
 
-    return chain
-
 
 def fake_chain_node():
     """
     Create a fake chain node.
     """
-    node = ChainNode.objects.create(
+    return ChainNode.objects.create(
         id=uuid.uuid4(),
         name=fake.unique.name(),
         description="This is a mock node",
@@ -40,11 +38,11 @@ def fake_chain_node():
             "llm": {
                 "class_path": "ix.chains.tests.mock_llm.MockLLM",
             },
-            "messages": [{"role": "system", "template": "This is a mock node"}],
+            "messages": [
+                {"role": "system", "template": "This is a mock node"}
+            ],
         },
     )
-
-    return node
 
 
 def fake_agent(**kwargs):
@@ -67,7 +65,7 @@ def fake_agent(**kwargs):
 
     chain = kwargs.get("chain", fake_chain())
 
-    agent = Agent.objects.create(
+    return Agent.objects.create(
         pk=kwargs.get("pk"),
         name=name,
         alias=alias,
@@ -77,7 +75,6 @@ def fake_agent(**kwargs):
         chain=chain,
         agent_class_path=agent_class_path,
     )
-    return agent
 
 
 def fake_user(**kwargs):
@@ -85,15 +82,15 @@ def fake_user(**kwargs):
     email = kwargs.get("email", fake.unique.email())
     password = kwargs.get("password", fake.password())
 
-    user = User.objects.create_user(username=username, email=email, password=password)
-    return user
+    return User.objects.create_user(
+        username=username, email=email, password=password
+    )
 
 
 def fake_task(**kwargs):
     user = kwargs.get("user") or fake_user()
     agent = kwargs.get("agent") or fake_agent()
-    task = Task.objects.create(user=user, agent=agent, chain=agent.chain)
-    return task
+    return Task.objects.create(user=user, agent=agent, chain=agent.chain)
 
 
 def fake_think(**kwargs):
@@ -146,7 +143,7 @@ def fake_feedback(
     task: Task = None, message_id: uuid.UUID = None, feedback: str = None, **kwargs
 ):
     content = {"type": "FEEDBACK", "feedback": feedback or "this is fake feedback"}
-    if not message_id and not message_id == -1:
+    if not message_id and message_id != -1:
         feedback_request = fake_feedback_request(task=task, question="test question")
         content["message_id"] = str(feedback_request.id)
 
@@ -264,7 +261,7 @@ def fake_task_log_msg(**kwargs):
 
 
 def fake_planner():
-    agent = fake_agent(
+    return fake_agent(
         name="Planner",
         purpose="Plan tasks for other agents to perform",
         agent_class_path="ix.agents.process.AgentProcess",
@@ -274,7 +271,6 @@ def fake_planner():
             "temperature": 0.3,
         },
     )
-    return agent
 
 
 # default id so test chat is always the same URL. This will be needed until

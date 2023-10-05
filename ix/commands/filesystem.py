@@ -49,5 +49,4 @@ def read_file(file_path: str) -> str:
 @command(name="find_files", description="Find files in a directory.")
 def find_files(glob_search_pattern: str) -> List[str]:
     """Finds files in the specified directory that match the given glob pattern and returns a list of file paths."""
-    files = glob.glob(os.path.join(WORKDIR / glob_search_pattern), recursive=True)
-    return files
+    return glob.glob(os.path.join(WORKDIR / glob_search_pattern), recursive=True)

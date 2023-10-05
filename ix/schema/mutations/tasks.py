@@ -47,11 +47,7 @@ class CreateTaskMutation(graphene.Mutation):
         else:
             agent = Agent.objects.get(pk=1)
 
-        if input.chain_id:
-            chain = Chain.objects.get(pk=input.chain_id)
-        else:
-            chain = agent.chain
-
+        chain = Chain.objects.get(pk=input.chain_id) if input.chain_id else agent.chain
         # Save to persistence layer
         task = Task.objects.create(
             user=user,

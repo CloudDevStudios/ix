@@ -44,11 +44,10 @@ class MockMemory(VectorMemory):
     def find_nearest(self, query: str, num_results: int = 1) -> List[NearestResult]:
         nearest = list(self.memory.values())
         nearest.sort(key=lambda item: item["score"], reverse=True)
-        formatted = [
+        return [
             NearestResult(key=item["key"], score=item["score"], data=item["data"])
             for item in nearest[:num_results]
         ]
-        return formatted
 
     def delete_vector(self, key: IndexKey) -> None:
         del self.memory[key]

@@ -101,11 +101,7 @@ class TaskLogMessage(models.Model):
         # SYSTEM messages that are included as history must be converted to the USER role. SYSTEM is a special meaning
         # that configures the agent. Messages must either be ASSISTANT or USER for the model to interpret it as
         # conversation.
-        if self.role == "system":
-            role = "user"
-        else:
-            role = self.role
-
+        role = "user" if self.role == "system" else self.role
         # return content_type specific formatting to tune AI response
         if content_type == "FEEDBACK":
             content_str = content["feedback"]

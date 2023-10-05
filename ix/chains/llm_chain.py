@@ -60,18 +60,18 @@ class LLMChain(LangchainLLMChain):
 
         prepared_config, context = cls.prepare_config(config, callback_manager)
 
-        # load message templates
-        messages = []
-        for message in config.pop("messages"):
-            messages.append(cls.create_message(message, prepared_config, context))
-
+        messages = [
+            cls.create_message(message, prepared_config, context)
+            for message in config.pop("messages")
+        ]
         # build prompt & chain
         prompt = ChatPromptTemplate.from_messages(messages)
-        chain = cls(
-            **config, callback_manager=callback_manager, prompt=prompt, verbose=True
+        return cls(
+            **config,
+            callback_manager=callback_manager,
+            prompt=prompt,
+            verbose=True
         )
-
-        return chain
 
 
 class LLMReply(LLMChain):

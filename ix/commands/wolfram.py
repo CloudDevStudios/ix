@@ -17,6 +17,5 @@ def search_wolfram(search_string: str) -> List[Tuple[str, str]]:
     res = client.query(search_string)
     results = []
     for pod in res.pods:
-        for subpod in pod.subpods:
-            results.append((pod.title, subpod.plaintext))
+        results.extend((pod.title, subpod.plaintext) for subpod in pod.subpods)
     return results
